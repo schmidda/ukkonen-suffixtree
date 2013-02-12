@@ -112,7 +112,7 @@ int node_is_leaf( node *v )
 }
 /**
  * Split this node's edge by creating a new node in the middle. Remember 
- * to preserve the "one a leaf always a leaf" property or f will be wrong.
+ * to preserve the "once a leaf always a leaf" property or f will be wrong.
  * @param v the node in question
  * @param loc the place on the edge after which to split it
  * @return the new internal node

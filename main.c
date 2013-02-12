@@ -13,8 +13,11 @@
 #include "error.h"
 #include "tree.h"
 #include "debug.h"
+#include "path.h"
 
 #define TEST_STRING "the quick brown fox jumps over the lazy dog."
+// debug
+char scratch[128];
 typedef struct pos_struct pos;
 // describes a character-position in the tree
 struct pos_struct
@@ -35,21 +38,10 @@ static node *root=NULL;
 static node *f=NULL;
 // the last created internal node
 static node *current=NULL;
-// the last internal node used in the extension algorithm
-static node *last;
+// the last position of str[j..i-1] used in the extension algorithm
+static pos last;
 // value of j for next extension
 static int r = 0;
-/**
- * Create a position safely
- * @return the finished pos or fail
- */
-static pos *pos_create()
-{
-    pos *p = calloc( 1, sizeof(pos) );
-    if ( p == NULL )
-        fail( "couldn't create new pos\n" );
-    return p;
-}
 /**
  * Find a child of an internal node starting with a character
  * @param v the internal node
@@ -63,77 +55,12 @@ node *find_child( node *v, char c )
        v = node_next(v);
     return v;
 }
-/**
- * Walk down the tree from the given node following the given path
- * @param v the node to start from
- * @param start the start index in str matching str[v->start]
- * @param end the end-index in str
- * @return a position
- */
-pos *walk_down( node *v, int start, int end )
-{
-    pos *p;
-    int len = (end-start)+1;
-    if ( len <= node_len(v) )
-    {
-        p = pos_create();
-        p->loc = node_start(v)+len-1;
-        p->v = v;
-    }
-    else
-    {
-        node *child = find_child( v, str[start+node_len(v)] );
-        p = walk_down( child, start+node_len(v), end );
-    }
-    return p;
-}
-/**
- * Find a location of the suffix in the tree.
- * @param j the extension number counting from 0
- * @param i the index of the end of the current prefix
- * @return the position (combined node and edge-offset)
- */ 
-static pos *find_beta( int j, int i )
-{
-    pos *p;
-    if ( j>i )
-    {
-        p = pos_create();
-        p->loc = 0;
-        p->v = root;
-        last = root;
-    }
-    else if ( j==0 )
-    {
-        p = pos_create();
-        p->loc = i;
-        p->v = f;
-        last = node_parent(f);
-    }
-    else 
-    {
-        node *parent = last;
-        if ( parent == root )
-            p = walk_down( parent, j, i );
-        else
-            p = walk_down( node_link(parent), node_start(f), i );
-    }
-    return p;
-}
-/**
- * Does the position continue with the given character?
- * @param p a position in the tree. 
- * @param c the character to test for in the next position
- * @return 1 if it does else 0
- */
-static int continues( pos *p, char c )
-{
-    if ( node_end(p->v,e) > p->loc )
-        return str[p->loc+1] == c;
-    else
-        return find_child(p->v,c) != NULL;
-}
 #ifdef DEBUG
+/**
+ * Print out the path leading to this node from root
+ * @param v the node to print the leading path of
+ * @return the allocated path (caller to dispose)
+ */
 char *ascend( node *v )
 {
     // measure string
@@ -174,17 +101,178 @@ static void verify_link( node *v )
                 char *a = ascend( node_link(v) );
                 if ( strcmp(&xa[1],a)!=0 )
                     fprintf(stderr,"link from %s to %s is invalid\n",
-                        xa,(a[0]==0)?(char*)"[root]":a);
+                        xa,(a[0]==0)?(char*)"[R]":a);
                 else
                     fprintf(stderr,"link: %s -> %s\n",
-                        xa,(a[0]==0)?(char*)"[root]":a);
+                        xa,(a[0]==0)?(char*)"[R]":a);
                 free( xa );
                 free( a );
             }
         }
     }
 }
+static char *substr( int start, int len )
+{
+    scratch[0] = 0;
+    strncat( scratch, &str[start], len );
+    return scratch;
+}
+// debug
+static int match_downwards( int j, int i )
+{
+    node *v = root;
+    int res = 1;
+    int k,loc = 0;
+    for ( k=j;k<=i;k++ )
+    {
+        if ( loc > node_end(v,e) )
+        {
+            v = find_child( v, str[k] );
+            if ( v == NULL )
+            {
+                res = 0;
+                break;
+            }
+            loc = node_start(v);
+        }
+        if ( str[k] != str[loc] )
+        {
+            res = 0;
+            break;
+        }
+        else
+            loc++;
+    }
+    return res;
+}
+static int match_backwards( pos *p, int j, int i )
+{
+    int k,m;
+    int res = 1;
+    node *v = p->v;
+    for ( k=p->loc,m=i;m>=j;m-- )
+    {
+        if ( k >= node_start(v) )
+        {
+            if ( str[k] != str[m] )
+            {
+                res = 0;
+                break;
+            }
+        }
+        if ( k > node_start(v) )
+            k--;
+        else
+        {
+            v = node_parent(v);
+            k = node_end(v,e);
+        }
+    }
+    return res;
+}
 #endif
+/**
+ * Create a position safely
+ * @return the finished pos or fail
+ */
+static pos *pos_create()
+{
+    pos *p = calloc( 1, sizeof(pos) );
+    if ( p == NULL )
+        fail( "couldn't create new pos\n" );
+    return p;
+}
+/**
+ * Walk down the tree from the given node following the given path
+ * @param v the node to start from its children
+ * @param p the path to walk down and then free
+ * @return a position corresponding to end
+ */
+pos *walk_down( node *v, path *p )
+{
+    pos *q=NULL;
+    int start = path_start( p );
+    int len = path_len( p );
+    v = find_child( v, str[start] );
+    while ( len > 0 )
+    {
+        if ( len <= node_len(v) )
+        {
+            q = pos_create();
+            q->loc = node_start(v)+len-1;
+            q->v = v;
+            break;
+        }
+        else
+        {
+            start += node_len(v);
+            len -= node_len(v);
+            v = find_child( v, str[start] );
+        }
+    }
+    path_dispose( p );
+    return q;
+}
+/**
+ * Find a location of the suffix in the tree.
+ * @param j the extension number counting from 0
+ * @param i the current phase - 1
+ * @return the position (combined node and edge-offset)
+ */ 
+static pos *find_beta( int j, int i )
+{
+    pos *p;
+    if ( j>i )  // empty string
+    {
+        p = pos_create();
+        p->loc = 0;
+        p->v = root;
+    }
+    else if ( j==0 )    // entire string
+    {
+        p = pos_create();
+        p->loc = i;
+        p->v = f;
+    }
+    else // walk across tree
+    {
+        node *v = last.v;
+        int len = last.loc-node_start(last.v)+1;
+        path *q = path_create( node_start(v), len );
+        v = node_parent( v );
+        while ( v != root && node_link(v)==NULL )
+        {
+            path *r = path_create( node_start(v), node_len(v) );
+            q = path_prepend( q, r );
+            v = node_parent( v );
+        }
+        if ( v != root )
+        {
+            v = node_link( v );
+            p = walk_down( v, q );
+        }
+        else
+        {
+            path_dispose( q );
+            p = walk_down( root, path_create(j,i-j+1) );
+        }
+    }
+    last = *p;
+    return p;
+}
+/**
+ * Does the position continue with the given character?
+ * @param p a position in the tree. 
+ * @param c the character to test for in the next position
+ * @return 1 if it does else 0
+ */
+static int continues( pos *p, char c )
+{
+    if ( node_end(p->v,e) > p->loc )
+        return str[p->loc+1] == c;
+    else
+        return find_child(p->v,c) != NULL;
+}
 /**
  * If current is set set its link to point to the next node, then clear it
  * @param v the link to point current to
@@ -219,7 +307,7 @@ static int extension( int j, int i )
     pos *p = find_beta( j, i-1 );
     // rule 1 (once a leaf always a leaf)
     if ( node_is_leaf(p->v) && pos_at_edge_end(p) )
-        return res;
+        res = 1;
     // rule 2
     else if ( !continues(p,str[i]) )
     {
@@ -246,8 +334,7 @@ static int extension( int j, int i )
     // rule 3
     else
     {
-        if ( current != NULL )
-            update_current_link( p->v );
+        update_current_link( p->v );
         res = 0;
     }
     free( p );
@@ -266,6 +353,7 @@ static void phase( int i )
             break;
     // update all leaf ends
     e++;
+    //print_tree( root );
 }
 #ifdef MAIN
 /**

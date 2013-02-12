@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/debug.o \
 	${OBJECTDIR}/error.o \
+	${OBJECTDIR}/path.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/tree.o
 
@@ -74,6 +75,11 @@ ${OBJECTDIR}/error.o: error.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.c) -g -DDEBUG -DMAIN -MMD -MP -MF $@.d -o ${OBJECTDIR}/error.o error.c
+
+${OBJECTDIR}/path.o: path.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.c) -g -DDEBUG -DMAIN -MMD -MP -MF $@.d -o ${OBJECTDIR}/path.o path.c
 
 ${OBJECTDIR}/main.o: main.c 
 	${MKDIR} -p ${OBJECTDIR}

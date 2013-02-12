@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>debug.h</itemPath>
       <itemPath>error.h</itemPath>
+      <itemPath>path.h</itemPath>
       <itemPath>tree.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -18,6 +19,7 @@
       <itemPath>debug.c</itemPath>
       <itemPath>error.c</itemPath>
       <itemPath>main.c</itemPath>
+      <itemPath>path.c</itemPath>
       <itemPath>tree.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
