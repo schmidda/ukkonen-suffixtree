@@ -8,5 +8,5 @@ of the code and the algorithm (minus the math) on
 http://programmerspatch.blogspot.com.au/2013/02/ukkonens-suffix-tree-algorithm.html. 
 As explained there the tree.c file can be replaced by a faster 
 implementation, e.g. one that uses small hash tables for large nodes. 
-The supplied implmentation uses linked lists which is adequate for 
+The supplied implementation uses linked lists which is adequate for 
 testing and demonstration purposes.
