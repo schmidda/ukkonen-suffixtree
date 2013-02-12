@@ -1,5 +1,5 @@
 /*
- * Copyright [2013] [Desmond Schmidt]
+ * Copyright 2013 Desmond Schmidt
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ extern "C" {
 
 typedef struct path_struct path;
 path *path_create( int start, int len );
-path *path_prepend( path *p, path *q );
+void path_prepend( path *p, int len );
 void path_dispose( path *p );
 int path_start( path *p );
 int path_len( path *p );

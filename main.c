@@ -1,5 +1,5 @@
 /*
- * Copyright [2013] [Desmond Schmidt]
+ * Copyright 2013 Desmond Schmidt
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -152,8 +152,7 @@ static pos *find_beta( int j, int i )
         v = node_parent( v );
         while ( v != root && node_link(v)==NULL )
         {
-            path *r = path_create( node_start(v), node_len(v) );
-            q = path_prepend( q, r );
+            path_prepend( q, node_len(v) );
             v = node_parent( v );
         }
         if ( v != root )

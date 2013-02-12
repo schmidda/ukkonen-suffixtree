@@ -1,5 +1,5 @@
 /*
- * Copyright [2013] [Desmond Schmidt]
+ * Copyright 2013 Desmond Schmidt
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,14 +41,14 @@ path *path_create( int start, int len )
     return p;
 }
 /**
- * Add one path on the end of another
+ * Add one path to the front of another
  * @param p the current path
- * @param pre the desired head
- * @return the new head
+ * @param len the length of the prefix
  */
-path *path_prepend( path *p, path *pre )
+void path_prepend( path *p, int len )
 {
-    p->start -= pre->len;
+    p->start -= len;
+    p->len += len;
 }
 /**
  * Get the first char in the path
