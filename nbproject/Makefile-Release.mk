@@ -35,10 +35,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/debug.o \
 	${OBJECTDIR}/error.o \
 	${OBJECTDIR}/path.o \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/print_tree.o \
 	${OBJECTDIR}/tree.o
 
 
@@ -66,11 +66,6 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/suffixtree: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/suffixtree ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
-${OBJECTDIR}/debug.o: debug.c 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.c) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/debug.o debug.c
-
 ${OBJECTDIR}/error.o: error.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
@@ -85,6 +80,11 @@ ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.c) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.c
+
+${OBJECTDIR}/print_tree.o: print_tree.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.c) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/print_tree.o print_tree.c
 
 ${OBJECTDIR}/tree.o: tree.c 
 	${MKDIR} -p ${OBJECTDIR}

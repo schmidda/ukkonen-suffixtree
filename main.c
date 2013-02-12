@@ -12,12 +12,10 @@
 #include <string.h>
 #include "error.h"
 #include "tree.h"
-#include "debug.h"
+#include "print_tree.h"
 #include "path.h"
 
 #define TEST_STRING "the quick brown fox jumps over the lazy dog."
-// debug
-char scratch[128];
 typedef struct pos_struct pos;
 // describes a character-position in the tree
 struct pos_struct
@@ -40,8 +38,12 @@ static node *f=NULL;
 static node *current=NULL;
 // the last position of str[j..i-1] used in the extension algorithm
 static pos last;
+// location of last suffix str[j..i] inserted by an extension
+static pos old_beta;
 // value of j for next extension
 static int r = 0;
+// the last value of j in the previous extension
+static int old_j = 0;
 /**
  * Find a child of an internal node starting with a character
  * @param v the internal node
@@ -56,120 +58,7 @@ node *find_child( node *v, char c )
     return v;
 }
 #ifdef DEBUG
-/**
- * Print out the path leading to this node from root
- * @param v the node to print the leading path of
- * @return the allocated path (caller to dispose)
- */
-char *ascend( node *v )
-{
-    // measure string
-    node *temp = v;
-    int len = 0;
-    while ( temp != root )
-    {
-        len += node_len(temp);
-        temp = node_parent(temp);
-    }
-    char *path = calloc( len+1, 1 );
-    temp = v;
-    int loc = len-node_len(v);
-    while ( temp != root )
-    {
-        memcpy( &path[loc], &str[node_start(temp)], node_len(temp) );
-        temp = node_parent( temp );
-        loc -= node_len( temp );
-    }
-    return path;
-}
-/**
- * Verify that all the suffix links all point to the next suffix
- * @param v the node whose suffix link is to be tested
- */
-static void verify_link( node *v )
-{
-    if ( node_children(v) != NULL )
-    {
-        if ( node_parent(v) != NULL )
-        {
-            if ( node_link(v) == NULL )
-                fprintf(stderr,"main: internal node without suffix link\n");
-            else
-            {
-                // we are an internal node
-                char *xa = ascend( v );
-                char *a = ascend( node_link(v) );
-                if ( strcmp(&xa[1],a)!=0 )
-                    fprintf(stderr,"link from %s to %s is invalid\n",
-                        xa,(a[0]==0)?(char*)"[R]":a);
-                else
-                    fprintf(stderr,"link: %s -> %s\n",
-                        xa,(a[0]==0)?(char*)"[R]":a);
-                free( xa );
-                free( a );
-            }
-        }
-    }
-}
-static char *substr( int start, int len )
-{
-    scratch[0] = 0;
-    strncat( scratch, &str[start], len );
-    return scratch;
-}
-// debug
-static int match_downwards( int j, int i )
-{
-    node *v = root;
-    int res = 1;
-    int k,loc = 0;
-    for ( k=j;k<=i;k++ )
-    {
-        if ( loc > node_end(v,e) )
-        {
-            v = find_child( v, str[k] );
-            if ( v == NULL )
-            {
-                res = 0;
-                break;
-            }
-            loc = node_start(v);
-        }
-        if ( str[k] != str[loc] )
-        {
-            res = 0;
-            break;
-        }
-        else
-            loc++;
-    }
-    return res;
-}
-static int match_backwards( pos *p, int j, int i )
-{
-    int k,m;
-    int res = 1;
-    node *v = p->v;
-    for ( k=p->loc,m=i;m>=j;m-- )
-    {
-        if ( k >= node_start(v) )
-        {
-            if ( str[k] != str[m] )
-            {
-                res = 0;
-                break;
-            }
-        }
-        if ( k > node_start(v) )
-            k--;
-        else
-        {
-            v = node_parent(v);
-            k = node_end(v,e);
-        }
-    }
-    return res;
-}
+#include "debug"
 #endif
 /**
  * Create a position safely
@@ -222,7 +111,13 @@ pos *walk_down( node *v, path *p )
 static pos *find_beta( int j, int i )
 {
     pos *p;
-    if ( j>i )  // empty string
+    if ( old_j > 0 && old_j == j )
+    {
+        p = pos_create();
+        p->loc = old_beta.loc;
+        p->v = old_beta.v;
+    }
+    else if ( j>i )  // empty string
     {
         p = pos_create();
         p->loc = 0;
@@ -282,7 +177,9 @@ void update_current_link( node *v )
     if ( current != NULL )
     {
         node_set_link( current, v );
+#ifdef DEBUG
         verify_link( current );
+#endif
         current = NULL;
     }
 }
@@ -294,6 +191,25 @@ void update_current_link( node *v )
 int pos_at_edge_end( pos *p )
 {
     return p->loc==node_end(p->v,e);
+}
+/**
+ * Record the position where the latest suffix was inserted
+ * @param p the position of j..i-1.
+ * @param i the desired index of the extra char
+ */
+static void update_old_beta( pos *p, int i )
+{
+    if ( node_end(p->v,e) > p->loc )
+    {
+        old_beta.v = p->v;
+        old_beta.loc = p->loc+1;
+    }
+    else
+    {
+        node *u = find_child( p->v, str[i] );
+        old_beta.v = u;
+        old_beta.loc = node_start( u );
+    }
 }
 /**
  * Extend the implicit suffix tree by adding one suffix of the current prefix
@@ -311,6 +227,7 @@ static int extension( int j, int i )
     // rule 2
     else if ( !continues(p,str[i]) )
     {
+        printf("applying rule 2 at j=%d for phase %d\n",j,i);
         node *leaf = node_create_leaf( i );
         if ( p->v==root || pos_at_edge_end(p) )
         {
@@ -330,11 +247,14 @@ static int extension( int j, int i )
                 current = u;
             node_add_child( u, leaf );
         }
+        update_old_beta( p, i );
     }
     // rule 3
     else
     {
+        printf("applying rule 3 at j=%d for phase %d\n",j,i);
         update_current_link( p->v );
+        update_old_beta( p, i );
         res = 0;
     }
     free( p );
@@ -348,9 +268,11 @@ static void phase( int i )
 {
     int j;
     current = NULL;
-    for ( j=0;j<=i;j++ )            
+    for ( j=old_j;j<=i;j++ )            
         if ( !extension(j,i) )
             break;
+    // remember number of last extension for next phase
+    old_j = (j>i)?i:j;
     // update all leaf ends
     e++;
     //print_tree( root );

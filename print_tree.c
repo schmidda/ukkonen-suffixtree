@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "tree.h"
+#include "print_tree.h"
 // define masks
 #define BAR_VALUE 61708863
 #define BAR_SPACE 536870912

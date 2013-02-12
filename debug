@@ -1,0 +1,116 @@
+// debug
+char scratch[128];
+/**
+ * Print out the path leading to this node from root
+ * @param v the node to print the leading path of
+ * @return the allocated path (caller to dispose)
+ */
+char *ascend( node *v )
+{
+    // measure string
+    node *temp = v;
+    int len = 0;
+    while ( temp != root )
+    {
+        len += node_len(temp);
+        temp = node_parent(temp);
+    }
+    char *path = calloc( len+1, 1 );
+    temp = v;
+    int loc = len-node_len(v);
+    while ( temp != root )
+    {
+        memcpy( &path[loc], &str[node_start(temp)], node_len(temp) );
+        temp = node_parent( temp );
+        loc -= node_len( temp );
+    }
+    return path;
+}
+/**
+ * Verify that all the suffix links all point to the next suffix
+ * @param v the node whose suffix link is to be tested
+ */
+static void verify_link( node *v )
+{
+    if ( node_children(v) != NULL )
+    {
+        if ( node_parent(v) != NULL )
+        {
+            if ( node_link(v) == NULL )
+                fprintf(stderr,"main: internal node without suffix link\n");
+            else
+            {
+                // we are an internal node
+                char *xa = ascend( v );
+                char *a = ascend( node_link(v) );
+                if ( strcmp(&xa[1],a)!=0 )
+                    fprintf(stderr,"link from %s to %s is invalid\n",
+                        xa,(a[0]==0)?(char*)"[R]":a);
+                else
+                    fprintf(stderr,"link: %s -> %s\n",
+                        xa,(a[0]==0)?(char*)"[R]":a);
+                free( xa );
+                free( a );
+            }
+        }
+    }
+}
+static char *substr( int start, int len )
+{
+    scratch[0] = 0;
+    strncat( scratch, &str[start], len );
+    return scratch;
+}
+// debug
+static int match_downwards( int j, int i )
+{
+    node *v = root;
+    int res = 1;
+    int k,loc = 0;
+    for ( k=j;k<=i;k++ )
+    {
+        if ( loc > node_end(v,e) )
+        {
+            v = find_child( v, str[k] );
+            if ( v == NULL )
+            {
+                res = 0;
+                break;
+            }
+            loc = node_start(v);
+        }
+        if ( str[k] != str[loc] )
+        {
+            res = 0;
+            break;
+        }
+        else
+            loc++;
+    }
+    return res;
+}
+static int match_backwards( pos *p, int j, int i )
+{
+    int k,m;
+    int res = 1;
+    node *v = p->v;
+    for ( k=p->loc,m=i;m>=j;m-- )
+    {
+        if ( k >= node_start(v) )
+        {
+            if ( str[k] != str[m] )
+            {
+                res = 0;
+                break;
+            }
+        }
+        if ( k > node_start(v) )
+            k--;
+        else
+        {
+            v = node_parent(v);
+            k = node_end(v,e);
+        }
+    }
+    return res;
+}
