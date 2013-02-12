@@ -155,6 +155,10 @@ void node_set_link( node *v, node *link )
 {
     v->link = link;
 }
+void node_set_len( node *v, int len )
+{
+    v->len = len;
+}
 node *node_parent( node *v )
 {
     return v->parent;

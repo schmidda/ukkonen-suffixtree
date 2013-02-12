@@ -26,10 +26,10 @@
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" apple</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" woolloomooloo</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" banana</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" woolloomooloo</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" banana</runcommand>
+        <runcommand>"${OUTPUT_PATH}" woolloomooloo</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

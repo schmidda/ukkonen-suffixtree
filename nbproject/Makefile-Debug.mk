@@ -69,27 +69,27 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/suffixtree: ${OBJECTFILES}
 ${OBJECTDIR}/error.o: error.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -g -DDEBUG -DMAIN -MMD -MP -MF $@.d -o ${OBJECTDIR}/error.o error.c
+	$(COMPILE.c) -g -DMAIN -MMD -MP -MF $@.d -o ${OBJECTDIR}/error.o error.c
 
 ${OBJECTDIR}/path.o: path.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -g -DDEBUG -DMAIN -MMD -MP -MF $@.d -o ${OBJECTDIR}/path.o path.c
+	$(COMPILE.c) -g -DMAIN -MMD -MP -MF $@.d -o ${OBJECTDIR}/path.o path.c
 
 ${OBJECTDIR}/main.o: main.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -g -DDEBUG -DMAIN -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.c
+	$(COMPILE.c) -g -DMAIN -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.c
 
 ${OBJECTDIR}/print_tree.o: print_tree.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -g -DDEBUG -DMAIN -MMD -MP -MF $@.d -o ${OBJECTDIR}/print_tree.o print_tree.c
+	$(COMPILE.c) -g -DMAIN -MMD -MP -MF $@.d -o ${OBJECTDIR}/print_tree.o print_tree.c
 
 ${OBJECTDIR}/tree.o: tree.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -g -DDEBUG -DMAIN -MMD -MP -MF $@.d -o ${OBJECTDIR}/tree.o tree.c
+	$(COMPILE.c) -g -DMAIN -MMD -MP -MF $@.d -o ${OBJECTDIR}/tree.o tree.c
 
 # Subprojects
 .build-subprojects:

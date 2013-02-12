@@ -17,6 +17,7 @@ typedef struct node_struct node;
 #define INFINITY INT_MAX
 node *node_create( int start, int len );
 void node_dispose( node *v );
+void node_set_len( node *v, int len );
 int node_len( node *v );
 node *node_children( node *v );
 node *node_next( node *v );

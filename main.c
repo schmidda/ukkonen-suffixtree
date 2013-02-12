@@ -227,7 +227,7 @@ static int extension( int j, int i )
     // rule 2
     else if ( !continues(p,str[i]) )
     {
-        printf("applying rule 2 at j=%d for phase %d\n",j,i);
+        //printf("applying rule 2 at j=%d for phase %d\n",j,i);
         node *leaf = node_create_leaf( i );
         if ( p->v==root || pos_at_edge_end(p) )
         {
@@ -241,7 +241,9 @@ static int extension( int j, int i )
             if ( i-j==1 )
             {
                 node_set_link( u, root );
-                verify_link(u);
+#ifdef DEBUG
+                verify_link( current );
+#endif
             }
             else 
                 current = u;
@@ -252,7 +254,7 @@ static int extension( int j, int i )
     // rule 3
     else
     {
-        printf("applying rule 3 at j=%d for phase %d\n",j,i);
+        //printf("applying rule 3 at j=%d for phase %d\n",j,i);
         update_current_link( p->v );
         update_old_beta( p, i );
         res = 0;
@@ -277,6 +279,23 @@ static void phase( int i )
     e++;
     //print_tree( root );
 }
+/**
+ * Set the length of each leaf to e recursively
+ * @param v the node in question
+ */
+static void set_e( node *v )
+{
+    if ( node_is_leaf(v) )
+    {
+        node_set_len( v, e-node_start(v)+1 );
+    }
+    node *u = node_children( v );
+    while ( u != NULL )
+    {
+        set_e( u );
+        u = node_next( u );
+    }
+}
 #ifdef MAIN
 /**
  * Test program for implementing Ukkonen's suffix tree algorithm
@@ -298,6 +317,7 @@ int main(int argc, char** argv)
             node_add_child( root, f );
             for ( i=1; i<=slen; i++ )
                 phase(i);
+            set_e( root );
             print_tree(root);
         }
         node_dispose( root );

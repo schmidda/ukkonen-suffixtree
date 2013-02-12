@@ -45,7 +45,6 @@
       <compileType>
         <cTool>
           <preprocessorList>
-            <Elem>DEBUG</Elem>
             <Elem>MAIN</Elem>
           </preprocessorList>
         </cTool>
