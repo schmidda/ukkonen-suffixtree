@@ -55,8 +55,6 @@ static node *current=NULL;
 static pos last;
 // location of last suffix str[j..i] inserted by an extension
 static pos old_beta;
-// value of j for next extension
-static int r = 0;
 // the last value of j in the previous extension
 static int old_j = 0;
 /**
@@ -310,17 +308,24 @@ static void set_e( node *v )
         u = node_next( u );
     }
 }
-#ifdef MAIN
 /**
- * Test program for implementing Ukkonen's suffix tree algorithm
+ * Build a tree using a given string
+ * @param txt the text to build it from
+ * @return the finished tree's root
  */
-int main(int argc, char** argv) 
-{    
-    // set input string
-    if ( argc==2 )
-        str = argv[1];
-    // create I_0 manually
-    slen = strlen( str );
+node *build_tree( char *txt )
+{
+    // init globals
+    e = 0;
+    root=NULL;
+    f=NULL;
+    current=NULL;
+    memset( &last, 0, sizeof(pos) );
+    memset( &old_beta, 0, sizeof(pos) );
+    old_j = 0;
+    str = txt;
+    slen = strlen(txt);
+    // actually build the tree
     root = node_create( 0, 0 );
     if ( root != NULL )
     {
@@ -332,8 +337,22 @@ int main(int argc, char** argv)
             for ( i=1; i<=slen; i++ )
                 phase(i);
             set_e( root );
-            print_tree(root);
         }
+    }
+    return root;
+}
+#ifdef MAIN
+/**
+ * Test program for implementing Ukkonen's suffix tree algorithm
+ */
+int main(int argc, char** argv) 
+{    
+    if ( argc==2 )
+        str = argv[1];
+    root = build_tree( str );
+    if ( root != NULL )
+    {
+        print_tree(root);
         node_dispose( root );
     }
 }

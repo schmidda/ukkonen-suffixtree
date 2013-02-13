@@ -77,8 +77,9 @@ void node_dispose( node *v )
     node *child = v->children;
     while ( child != NULL )
     {
+        node *next = child->next;
         node_dispose( child );
-        child = child->next;
+        child = next;
     }
     free( v );
 }

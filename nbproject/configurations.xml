@@ -4,7 +4,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>benchmark.h</itemPath>
       <itemPath>error.h</itemPath>
+      <itemPath>main.h</itemPath>
       <itemPath>path.h</itemPath>
       <itemPath>print_tree.h</itemPath>
       <itemPath>tree.h</itemPath>
@@ -16,11 +18,13 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>benchmark.c</itemPath>
       <itemPath>debug</itemPath>
       <itemPath>error.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>path.c</itemPath>
       <itemPath>print_tree.c</itemPath>
+      <itemPath>test.c</itemPath>
       <itemPath>tree.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -45,7 +49,7 @@
       <compileType>
         <cTool>
           <preprocessorList>
-            <Elem>MAIN</Elem>
+            <Elem>TEST</Elem>
           </preprocessorList>
         </cTool>
       </compileType>
