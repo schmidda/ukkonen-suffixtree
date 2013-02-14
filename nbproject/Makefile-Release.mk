@@ -40,8 +40,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/test.o \
 	${OBJECTDIR}/path.o \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/print_tree.o \
-	${OBJECTDIR}/tree.o
+	${OBJECTDIR}/tree.o \
+	${OBJECTDIR}/print_tree.o
 
 
 # C Compiler Flags
@@ -93,15 +93,15 @@ ${OBJECTDIR}/main.o: main.c
 	${RM} $@.d
 	$(COMPILE.c) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.c
 
-${OBJECTDIR}/print_tree.o: print_tree.c 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.c) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/print_tree.o print_tree.c
-
 ${OBJECTDIR}/tree.o: tree.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.c) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/tree.o tree.c
+
+${OBJECTDIR}/print_tree.o: print_tree.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.c) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/print_tree.o print_tree.c
 
 # Subprojects
 .build-subprojects:

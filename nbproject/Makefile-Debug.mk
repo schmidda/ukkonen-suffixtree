@@ -40,8 +40,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/test.o \
 	${OBJECTDIR}/path.o \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/print_tree.o \
-	${OBJECTDIR}/tree.o
+	${OBJECTDIR}/tree.o \
+	${OBJECTDIR}/print_tree.o
 
 
 # C Compiler Flags
@@ -71,37 +71,37 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/suffixtree: ${OBJECTFILES}
 ${OBJECTDIR}/benchmark.o: benchmark.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -g -DTEST -MMD -MP -MF $@.d -o ${OBJECTDIR}/benchmark.o benchmark.c
+	$(COMPILE.c) -O3 -DTEST -MMD -MP -MF $@.d -o ${OBJECTDIR}/benchmark.o benchmark.c
 
 ${OBJECTDIR}/error.o: error.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -g -DTEST -MMD -MP -MF $@.d -o ${OBJECTDIR}/error.o error.c
+	$(COMPILE.c) -O3 -DTEST -MMD -MP -MF $@.d -o ${OBJECTDIR}/error.o error.c
 
 ${OBJECTDIR}/test.o: test.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -g -DTEST -MMD -MP -MF $@.d -o ${OBJECTDIR}/test.o test.c
+	$(COMPILE.c) -O3 -DTEST -MMD -MP -MF $@.d -o ${OBJECTDIR}/test.o test.c
 
 ${OBJECTDIR}/path.o: path.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -g -DTEST -MMD -MP -MF $@.d -o ${OBJECTDIR}/path.o path.c
+	$(COMPILE.c) -O3 -DTEST -MMD -MP -MF $@.d -o ${OBJECTDIR}/path.o path.c
 
 ${OBJECTDIR}/main.o: main.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -g -DTEST -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.c
-
-${OBJECTDIR}/print_tree.o: print_tree.c 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.c) -g -DTEST -MMD -MP -MF $@.d -o ${OBJECTDIR}/print_tree.o print_tree.c
+	$(COMPILE.c) -O3 -DTEST -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.c
 
 ${OBJECTDIR}/tree.o: tree.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.c) -g -DTEST -MMD -MP -MF $@.d -o ${OBJECTDIR}/tree.o tree.c
+	$(COMPILE.c) -O3 -DTEST -MMD -MP -MF $@.d -o ${OBJECTDIR}/tree.o tree.c
+
+${OBJECTDIR}/print_tree.o: print_tree.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.c) -O3 -DTEST -MMD -MP -MF $@.d -o ${OBJECTDIR}/print_tree.o print_tree.c
 
 # Subprojects
 .build-subprojects:

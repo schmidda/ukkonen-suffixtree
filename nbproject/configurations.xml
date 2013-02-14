@@ -48,6 +48,7 @@
       </toolsSet>
       <compileType>
         <cTool>
+          <developmentMode>6</developmentMode>
           <preprocessorList>
             <Elem>TEST</Elem>
           </preprocessorList>

@@ -169,6 +169,7 @@ static int read_dir( char *folder )
                         break;
                     }
                     node_dispose( tree );
+                    free( txt );
                 }
                 if ( path != NULL )
                     free( path );
