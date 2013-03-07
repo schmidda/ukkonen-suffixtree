@@ -63,7 +63,7 @@ static int old_j = 0;
  * @param c the char to look for
  * @return the child node
  */
-node *find_child( node *v, char c )
+static node *find_child( node *v, char c )
 {
     v = node_children(v);
     while ( v != NULL && str[node_start(v)] != c )
@@ -90,7 +90,7 @@ static pos *pos_create()
  * @param p the path to walk down and then free
  * @return a position corresponding to end
  */
-pos *walk_down( node *v, path *p )
+static pos *walk_down( node *v, path *p )
 {
     pos *q=NULL;
     int start = path_start( p );
@@ -184,7 +184,7 @@ static int continues( pos *p, char c )
  * If current is set set its link to point to the next node, then clear it
  * @param v the link to point current to
  */
-void update_current_link( node *v )
+static void update_current_link( node *v )
 {
     if ( current != NULL )
     {
@@ -200,7 +200,7 @@ void update_current_link( node *v )
  * @param p the position to test
  * @return 1 if it is, else 0
  */
-int pos_at_edge_end( pos *p )
+static int pos_at_edge_end( pos *p )
 {
     return p->loc==node_end(p->v,e);
 }

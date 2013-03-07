@@ -5,4 +5,20 @@
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/Users/desmond/NetBeansProjects/suffixtree/main.c</file>
+        <file>file:/Users/desmond/NetBeansProjects/suffixtree/print_tree.c</file>
+        <file>file:/Users/desmond/NetBeansProjects/suffixtree/error.c</file>
+        <file>file:/Users/desmond/NetBeansProjects/suffixtree/error.h</file>
+        <file>file:/Users/desmond/NetBeansProjects/suffixtree/print_tree.h</file>
+        <file>file:/Users/desmond/NetBeansProjects/suffixtree/tree.h</file>
+        <file>file:/Users/desmond/NetBeansProjects/suffixtree/tree.c</file>
+        <file>file:/Users/desmond/NetBeansProjects/suffixtree/path.c</file>
+        <file>file:/Users/desmond/NetBeansProjects/suffixtree/path.h</file>
+        <file>file:/Users/desmond/NetBeansProjects/suffixtree/debug</file>
+        <file>file:/Users/desmond/NetBeansProjects/suffixtree/test.c</file>
+        <file>file:/Users/desmond/NetBeansProjects/suffixtree/main.h</file>
+        <file>file:/Users/desmond/NetBeansProjects/suffixtree/benchmark.c</file>
+        <file>file:/Users/desmond/NetBeansProjects/suffixtree/benchmark.h</file>
+    </open-files>
 </project-private>
