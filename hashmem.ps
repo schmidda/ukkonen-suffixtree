@@ -1,7 +1,7 @@
 %!PS-Adobe-2.0
 %%Title: hashmem.ps
-%%Creator: gnuplot 4.6 patchlevel 1
-%%CreationDate: Mon May 27 06:44:16 2013
+%%Creator: gnuplot 4.4 patchlevel 3
+%%CreationDate: Sun Nov 16 14:07:05 2014
 %%DocumentFonts: (atend)
 %%BoundingBox: 50 50 554 770
 %%Orientation: Landscape
@@ -22,12 +22,10 @@ gnudict begin
 /Level1 false def
 /Rounded false def
 /ClipToBoundingBox false def
-/SuppressPDFMark false def
 /TransparentPatterns false def
 /gnulinewidth 5.000 def
 /userlinewidth gnulinewidth def
 /Gamma 1.0 def
-/BackgroundColor {-1.000 -1.000 -1.000} def
 %
 /vshift -46 def
 /dl1 {
@@ -42,6 +40,22 @@ gnudict begin
 /vpt_ 31.5 def
 /hpt hpt_ def
 /vpt vpt_ def
+Level1 {} {
+/SDict 10 dict def
+systemdict /pdfmark known not {
+  userdict /pdfmark systemdict /cleartomark get put
+} if
+SDict begin [
+  /Title (hashmem.ps)
+  /Subject (gnuplot plot)
+  /Creator (gnuplot 4.4 patchlevel 3)
+  /Author (desmond)
+%  /Producer (gnuplot)
+%  /Keywords ()
+  /CreationDate (Sun Nov 16 14:07:05 2014)
+  /DOCINFO pdfmark
+end
+} ifelse
 /doclip {
   ClipToBoundingBox {
     newpath 50 50 moveto 554 50 lineto 554 770 lineto 50 770 lineto closepath
@@ -49,7 +63,7 @@ gnudict begin
   } if
 } def
 %
-% Gnuplot Prolog Version 4.6 (September 2012)
+% Gnuplot Prolog Version 4.4 (August 2010)
 %
 %/SuppressPDFMark true def
 %
@@ -316,8 +330,7 @@ gnudict begin
 /PatternFill {gsave /PFa [ 9 2 roll ] def
   PFa 0 get PFa 2 get 2 div add PFa 1 get PFa 3 get 2 div add translate
   PFa 2 get -2 div PFa 3 get -2 div PFa 2 get PFa 3 get Rec
-  TransparentPatterns {} {gsave 1 setgray fill grestore} ifelse
-  clip
+  gsave 1 setgray fill grestore clip
   currentlinewidth 0.5 mul setlinewidth
   /PFs PFa 2 get dup mul PFa 3 get dup mul add sqrt def
   0 0 M PFa 5 get rotate PFs -2 div dup translate
@@ -450,23 +463,6 @@ currentdict end definefont pop
   Blacktext {gsave 0 setgray MFshow grestore} {MFshow} ifelse } bind def
 /XYsave    { [( ) 1 2 true false 3 ()] } bind def
 /XYrestore { [( ) 1 2 true false 4 ()] } bind def
-Level1 SuppressPDFMark or 
-{} {
-/SDict 10 dict def
-systemdict /pdfmark known not {
-  userdict /pdfmark systemdict /cleartomark get put
-} if
-SDict begin [
-  /Title (hashmem.ps)
-  /Subject (gnuplot plot)
-  /Creator (gnuplot 4.6 patchlevel 1)
-  /Author (desmond)
-%  /Producer (gnuplot)
-%  /Keywords ()
-  /CreationDate (Mon May 27 06:44:16 2013)
-  /DOCINFO pdfmark
-end
-} ifelse
 end
 %%EndProlog
 %%Page: 1 1
@@ -480,7 +476,6 @@ doclip
 0 setgray
 newpath
 (Helvetica) findfont 140 scalefont setfont
-BackgroundColor 0 lt 3 1 roll 0 lt exch 0 lt or or not {gsave BackgroundColor C clippath fill grestore} if
 1.000 UL
 LTb
 840 448 M
@@ -489,67 +484,57 @@ LTb
 -63 0 V
 stroke
 756 448 M
-[ [(Helvetica) 140.0 0.0 true true 0 (5000000)]
+[ [(Helvetica) 140.0 0.0 true true 0 (     0)]
 ] -46.7 MRshow
 1.000 UL
 LTb
-840 1044 M
+840 1143 M
 63 0 V
 6128 0 R
 -63 0 V
 stroke
-756 1044 M
+756 1143 M
 [ [(Helvetica) 140.0 0.0 true true 0 (10000000)]
 ] -46.7 MRshow
 1.000 UL
 LTb
-840 1640 M
+840 1838 M
 63 0 V
 6128 0 R
 -63 0 V
 stroke
-756 1640 M
-[ [(Helvetica) 140.0 0.0 true true 0 (15000000)]
-] -46.7 MRshow
-1.000 UL
-LTb
-840 2236 M
-63 0 V
-6128 0 R
--63 0 V
-stroke
-756 2236 M
+756 1838 M
 [ [(Helvetica) 140.0 0.0 true true 0 (20000000)]
 ] -46.7 MRshow
 1.000 UL
 LTb
-840 2831 M
+840 2534 M
 63 0 V
 6128 0 R
 -63 0 V
 stroke
-756 2831 M
-[ [(Helvetica) 140.0 0.0 true true 0 (25000000)]
-] -46.7 MRshow
-1.000 UL
-LTb
-840 3427 M
-63 0 V
-6128 0 R
--63 0 V
-stroke
-756 3427 M
+756 2534 M
 [ [(Helvetica) 140.0 0.0 true true 0 (30000000)]
 ] -46.7 MRshow
 1.000 UL
 LTb
-840 4023 M
+840 3229 M
 63 0 V
 6128 0 R
 -63 0 V
 stroke
-756 4023 M
-[ [(Helvetica) 140.0 0.0 true true 0 (35000000)]
+756 3229 M
+[ [(Helvetica) 140.0 0.0 true true 0 (40000000)]
+] -46.7 MRshow
+1.000 UL
+LTb
+840 3924 M
+63 0 V
+6128 0 R
+-63 0 V
+stroke
+756 3924 M
+[ [(Helvetica) 140.0 0.0 true true 0 (50000000)]
 ] -46.7 MRshow
 1.000 UL
 LTb
@@ -559,7 +544,7 @@ LTb
 -63 0 V
 stroke
 756 4619 M
-[ [(Helvetica) 140.0 0.0 true true 0 (40000000)]
+[ [(Helvetica) 140.0 0.0 true true 0 (60000000)]
 ] -46.7 MRshow
 1.000 UL
 LTb
@@ -699,106 +684,106 @@ LCb setrgbcolor
 LT1
 6464 2603 M
 399 0 V
-1518 719 M
-49 -6 V
-49 -5 V
-49 -5 V
-49 -4 V
-49 -4 V
-50 -3 V
-49 -1 V
-49 -1 V
-49 1 V
-49 3 V
-49 5 V
-50 7 V
-49 9 V
-49 11 V
-49 14 V
-49 16 V
-49 19 V
-50 20 V
-49 23 V
-49 25 V
-49 27 V
-49 29 V
-49 30 V
-50 32 V
-49 33 V
-49 35 V
-49 36 V
-49 37 V
-50 38 V
-49 39 V
-49 40 V
-49 40 V
-49 42 V
-49 41 V
-50 42 V
-49 43 V
-49 42 V
-49 43 V
-49 42 V
-49 43 V
-50 42 V
-49 42 V
-49 41 V
-49 41 V
-49 41 V
-49 40 V
-50 39 V
-49 39 V
-49 39 V
-49 38 V
-49 38 V
-49 38 V
-50 37 V
-49 37 V
-49 36 V
-49 36 V
-49 35 V
-49 36 V
-50 35 V
-49 34 V
-49 35 V
-49 33 V
-49 34 V
-49 33 V
-50 34 V
-49 32 V
-49 33 V
-49 32 V
-49 32 V
-49 32 V
-50 31 V
-49 32 V
-49 31 V
-49 30 V
-49 31 V
-49 30 V
-50 31 V
-49 30 V
-49 30 V
-49 29 V
-49 30 V
-49 29 V
-50 29 V
-49 30 V
-49 28 V
-49 29 V
-49 29 V
-49 29 V
-50 28 V
-49 29 V
-49 28 V
-49 29 V
-49 28 V
-49 28 V
-50 28 V
-49 29 V
-49 28 V
-49 28 V
-49 28 V
+844 450 M
+56 34 V
+56 35 V
+56 34 V
+56 35 V
+56 35 V
+56 35 V
+56 34 V
+56 34 V
+56 34 V
+56 34 V
+56 34 V
+56 34 V
+56 34 V
+56 34 V
+56 34 V
+56 34 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 35 V
+55 34 V
+56 35 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 35 V
+56 34 V
+56 35 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+55 34 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+55 35 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
+56 34 V
+56 34 V
+56 35 V
 % End plot #1
 % Begin plot #2
 stroke
@@ -810,106 +795,106 @@ LCb setrgbcolor
 LT0
 6464 2463 M
 399 0 V
-1518 876 M
-49 -4 V
-49 -5 V
-49 -4 V
-49 -3 V
-49 -3 V
-50 -1 V
-49 0 V
-49 1 V
-49 2 V
-49 5 V
-49 6 V
-50 9 V
-49 11 V
-49 13 V
-49 17 V
-49 19 V
-49 21 V
-50 24 V
-49 27 V
-49 28 V
-49 30 V
-49 33 V
-49 34 V
-50 36 V
-49 38 V
-49 39 V
-49 40 V
-49 42 V
-50 43 V
-49 44 V
-49 45 V
-49 45 V
-49 46 V
-49 47 V
-50 48 V
-49 47 V
-49 48 V
-49 48 V
-49 48 V
-49 48 V
-50 48 V
-49 47 V
-49 47 V
-49 47 V
-49 46 V
-49 45 V
-50 45 V
-49 45 V
-49 44 V
-49 44 V
-49 43 V
-49 43 V
-50 43 V
-49 42 V
-49 42 V
-49 42 V
-49 41 V
-49 41 V
-50 41 V
-49 40 V
-49 40 V
-49 39 V
-49 40 V
-49 38 V
-50 39 V
-49 39 V
-49 38 V
-49 38 V
-49 37 V
-49 38 V
-50 37 V
-49 37 V
-49 36 V
-49 37 V
-49 36 V
-49 36 V
-50 36 V
-49 36 V
-49 35 V
-49 36 V
-49 35 V
-49 35 V
-50 35 V
-49 35 V
-49 35 V
-49 34 V
-49 35 V
-49 34 V
-50 34 V
-49 34 V
-49 34 V
-49 35 V
-49 34 V
-49 33 V
-50 34 V
-49 34 V
-49 34 V
-49 34 V
-49 34 V
+844 451 M
+56 41 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+55 40 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+55 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+56 40 V
+56 41 V
+55 40 V
+56 40 V
+56 40 V
+56 40 V
+56 41 V
+56 40 V
+56 40 V
+56 40 V
+56 41 V
 % End plot #2
 stroke
 1.000 UL
