@@ -16,6 +16,9 @@
 #include<stdio.h>
 #include <stdlib.h>
 #include "error.h"
+#ifdef MEMWATCH
+#include "memwatch.h"
+#endif
 /**
  * Exit the program on an error
  * @param message display this message first

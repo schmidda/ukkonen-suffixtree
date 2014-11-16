@@ -29,6 +29,9 @@
 #include "tree.h"
 #include "print_tree.h"
 #include "path.h"
+#ifdef MEMWATCH
+#include "memwatch.h"
+#endif
 
 #define TEST_STRING "the quick brown fox jumps over the lazy dog."
 typedef struct pos_struct pos;
@@ -57,19 +60,6 @@ static pos last;
 static pos old_beta;
 // the last value of j in the previous extension
 static int old_j = 0;
-/**
- * Find a child of an internal node starting with a character
- * @param v the internal node
- * @param c the char to look for
- * @return the child node
- */
-static node *find_child( node *v, char c )
-{
-    v = node_children(v);
-    while ( v != NULL && str[node_start(v)] != c )
-       v = node_next(v);
-    return v;
-}
 #ifdef DEBUG
 #include "debug"
 #endif
@@ -301,11 +291,15 @@ static void set_e( node *v )
     {
         node_set_len( v, e-node_start(v)+1 );
     }
-    node *u = node_children( v );
-    while ( u != NULL )
+    node_iterator *iter = node_children( v );
+    if ( iter != NULL )
     {
-        set_e( u );
-        u = node_next( u );
+        while ( node_iterator_has_next(iter) )
+        {
+            node *u = node_iterator_next( iter );
+            set_e( u );
+        }
+        node_iterator_dispose( iter );
     }
 }
 /**

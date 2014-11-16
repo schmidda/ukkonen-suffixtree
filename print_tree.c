@@ -20,6 +20,9 @@
 #include "tree.h"
 #include "print_tree.h"
 #include "error.h"
+#ifdef MEMWATCH
+#include "memwatch.h"
+#endif
 // define masks
 #define BAR_VALUE 61708863
 #define BAR_SPACE 536870912
@@ -157,7 +160,7 @@ static int print_label( node *v )
             printf("%c",str[i]);
     }
     // print terminal star for unfinished leaves
-    if ( node_children(v)==NULL && e < slen )
+    if ( node_num_children(v)==0 && e < slen )
         printf("*");
     return end-start+1;
 }
@@ -183,38 +186,38 @@ static void set_last_bar( int *bars, int mode )
  * @param v the node to start printing from
  * @param bars array of vertical bars to draw on each line
  */
-static void print_node( node *v, int *bars )
+static void print_node( node_iterator *iter, int *bars )
 {
     int depth;
-    node *u = v;
-    while ( u != NULL )
+    int first = 1;
+    while ( node_iterator_has_next(iter) )
     {
-        if ( u != v )
+        node *u = node_iterator_next(iter);
+        if ( !first )
         {
             print_bar_line( bars );
             print_bars( bars, 1 );
+            first = 0;
         }
-        if ( node_next(u)==NULL )
+        if ( !node_iterator_has_next(iter) )
             set_last_bar(bars,BAR_SPACE);
         printf("-");
-        if ( node_len(u) == 0 )
-            depth = printf("[R]") + 1;
-        else
-            depth = print_label(u);
+        depth = print_label(u);
         if ( node_is_leaf(u) )
             printf("\n");
         else
             print_node( node_children(u), add_bar(bars,depth) );
-        u = node_next( u );
     }
+    node_iterator_dispose( iter );
 }
 /**
  * Print the entire tree recursively
- * @param v the node to start from (root)
+ * @param root the node to start from
  */
-void print_tree( node *v )
+void print_tree( node *root )
 {
-    print_node( v, NULL );
+    int depth = printf("[R]") + 1;
+    print_node( node_children(root), add_bar(NULL,depth) );
     dispose_bars();
 }
 #ifdef DEBUG_TREE

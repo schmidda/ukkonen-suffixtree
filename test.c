@@ -7,7 +7,11 @@
 #include <string.h>
 #include "tree.h"
 #include "main.h"
+#ifdef MEMWATCH
+#include "memwatch.h"
+#endif
 static char *folder;
+long mem_usage;
 typedef struct entry_struct entry;
 struct entry_struct
 {
@@ -141,21 +145,25 @@ static int read_dir( char *folder )
             if ( strcmp(ent->d_name,".")!=0&&strcmp(ent->d_name,"..")!=0 )
             {
                 char *path = create_path(folder,ent->d_name);
+                printf("building tree for %s\n",ent->d_name);
                 char *txt = read_file( path, &flen );
                 if ( txt == NULL )
                     break;
                 else
                 {
-                    long mem2,mem1 = get_mem_usage();
+                    //long mem2,mem1 = get_mem_usage();
+                    // precise memory usage
+                    mem_usage = 0;
                     int64_t time2,time1 = epoch_time();
                     node *tree = build_tree( txt );
-                    mem2 = get_mem_usage();
+                    //mem2 = get_mem_usage();
                     time2 = epoch_time();
                     entry *e = calloc( 1, sizeof(entry) );
                     if ( e != NULL )
                     {
                         e->file = strdup(ent->d_name);
-                        e->space = mem2-mem1;
+                        //e->space = mem2-mem1;
+                        e->space = mem_usage;
                         e->time = time2-time1;
                         e->size = flen;
                         append_entry( e );
@@ -190,9 +198,10 @@ int main( int argc, char **argv )
         if ( res > 0 )
         {
             entry *e = entries;
+            printf("%s\t\t%s\t%s\t%s\n","file","size","time (μsecs)","space");
             while ( e != NULL )
             {
-                printf("%s\t%d\t%ld\t%ld\n",e->file,e->size,e->time,e->space);
+                printf("%s\t%d\t%ld\t\t%ld\n",e->file,e->size,e->time,e->space);
                 e = e->next;
             }
             dispose_entries();

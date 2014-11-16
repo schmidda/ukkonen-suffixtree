@@ -3,6 +3,9 @@
 #include <sys/resource.h>
 #include <unistd.h>
 #include "benchmark.h"
+#ifdef MEMWATCH
+#include "memwatch.h"
+#endif
 /**
  * Get the current memory usage of this process
  * @return the fixed memory in use by this process
