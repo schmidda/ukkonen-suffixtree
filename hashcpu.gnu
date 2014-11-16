@@ -1,6 +1,6 @@
 set terminal postscript enhanced monochrome dashed 
-#set terminal png
-set output "hashcpu.ps"
+set terminal png
+set output "hashcpu.png"
 set multiplot
 set style data lines
 set style line 1 linetype 1 lw 2

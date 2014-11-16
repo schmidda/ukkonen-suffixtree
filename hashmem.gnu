@@ -1,6 +1,6 @@
 set terminal postscript enhanced monochrome dashed 
-#set terminal png
-set output "hashmem.ps"
+set terminal png
+set output "hashmem.png"
 set multiplot
 set style data lines
 set format y "%6.0f"
