@@ -5,9 +5,10 @@ set multiplot
 set style data lines
 set style line 1 linetype 1 lw 2
 set style line 2 linetype 2 lw 2
-set title "Performance of hashtable vs list"
+set title "Time taken microseconds of hashtable vs list"
 set ylabel "CPU (milliseconds)"
 set xlabel "File size (bytes)"
+set xtics rotate
 set key inside right center vertical
 # common margins
 set lmargin 10

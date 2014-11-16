@@ -9,6 +9,7 @@ set style line 2 linetype 2 lw 2
 set title "Memory usage of hashtable vs list"
 set ylabel "Real memory (bytes)"
 set xlabel "File size (bytes)"
+set xtics rotate
 set key inside right center vertical
 # common margins
 set lmargin 10
